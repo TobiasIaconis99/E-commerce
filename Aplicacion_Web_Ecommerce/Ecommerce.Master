@@ -1,0 +1,353 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Ecommerce.Master.cs" Inherits="Aplicacion_Web_Ecommerce.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="es">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%--<title><%: Page.Title %> - El ropavejero</title>--%>
+
+<%--    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+
+    <webopt:bundlereference runat="server" path="~/Content/css" />--%>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="Scripts/bootstrap.min.js"></script>
+    <link href="Content/Site.css" rel="stylesheet" />
+    <script src="Scripts/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@latest/dist/Chart.min.js"></script>
+
+</head>
+<body style="font-family:Calibri,Arial,'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+    <form runat="server">        
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Framework Scripts--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="bootstrap" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+
+                <%--Site Scripts--%>
+            </Scripts>
+        </asp:ScriptManager>
+
+
+
+        <header class="bg-black text-white" style="margin-bottom: 0.5rem;">
+            <%--<div class="container">--%>
+                <div class="row">
+                    <div class="col-1">
+                        <a href="Home.aspx"><img src="https://img.freepik.com/premium-vector/ecommerce-minimal-vector-line-icon-3d-button-isolated-black-background-premium-vector_570929-1055.jpg?w=360" class="img-fluid" alt="Logo Ecommerce" style="width: 5rem;"/></a>
+                    </div>
+                    <div class="col-8">
+                        <div class="input-group mt-3">
+                            <%//Esta es la barra buscadora %>
+                            <asp:TextBox ID="BarraBuscadora" runat="server" type="text" class="form-control"  placeholder="Buscar articulo por nombre, marca, categoria o genero" aria-label="Recipient's username"  aria-describedby="button-addon2" OnTextChanged="BarraBuscadora_TextChanged"></asp:TextBox>
+                            <%//<input type="text" class="form-control" id="BarraBuscadora" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2" > %>
+                            <%//Este es el boton %>
+                            <asp:Button ID="BtnBuscar" runat="server" Text="Buscar" class="btn btn-secondary" OnClick="BtnBuscar_Click" type="button" />         
+                        </div>
+                    </div>
+                    <div class="col-3" style="padding: .6rem .75rem;">
+                      <%--  <div class="badge bg-primary mt-3 text-wrap" style="width: 6rem;">
+                            Ingresar 
+                            Registrarse
+                        </div>--%>
+                        <a href="CarritoUsuario.aspx">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart m-3" viewBox="0 0 16 16">
+                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                            </svg>
+                        </a>
+                   
+                        <asp:Button ID="BtnCerrarSession" runat="server" CssClass="btn btn-primary" Text="Cerrar session" OnClick="BtnCerrarSession_Click"/>
+                    
+
+                    </div>
+                </div>
+            <%--</div>--%>
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid">
+                    <%--    <a class="navbar-brand" href="#">Navbar</a>--%>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item dropdown" style="margin-left: 8rem; margin-right:3rem;">
+                                <a class="dropdown-toggle nav-link text-white" href="#" id="nbMujer" role="button" data-bs-toggle="dropdown" aria-expanded="false">Mujer
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="nbMujer">
+                                    <li><a class="dropdown-item" href="Busqueda?value=calzado">Calzado</a></li>
+                                    <li><a class="dropdown-item" href="Busqueda?value=blusas">Blusas</a></li>
+                                    <li><a class="dropdown-item" href="Busqueda?value=jeans">Jeans</a></li>
+                                    <li><a class="dropdown-item" href="Busqueda?value=camperas">Camperas</a></li>
+                                    <li><a class="dropdown-item" href="Busqueda?value=zapatillas">Zapatillas</a></li>
+<%--                                    
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>--%>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown" style="margin-left: 3rem; margin-right:3rem;">
+                                <a class="dropdown-toggle nav-link text-white" href="#" id="ngHombre" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hombre
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="ngHombre">
+                                    <li><a class="dropdown-item" href="Busqueda?value=zapatillas">Zapatillas</a></li>
+                                    <li><a class="dropdown-item" href="Busqueda?value=remeras">Remeras</a></li>
+                                    <li><a class="dropdown-item" href="Busqueda?value=jeans">Jeans</a></li>
+                                    <li><a class="dropdown-item" href="Busqueda?value=calzado">Calzado</a></li>
+                                    <li><a class="dropdown-item" href="Busqueda?value=camperas">Camperas</a></li>
+                                    <%--                                    
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>--%>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown" style="margin-left: 3rem; margin-right:3rem;">
+                                <a class="dropdown-toggle nav-link text-white" href="#" id="nbInfantil" role="button" data-bs-toggle="dropdown" aria-expanded="false">Infantil
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="nbInfantil">
+                                    <li><a class="dropdown-item" href="Busqueda?value=remeras">Remeras</a></li>
+                                    <li><a class="dropdown-item" href="Busqueda?value=Calzado">Calzado</a></li>
+                                    <li><a class="dropdown-item" href="Busqueda?value=zapatillas">Zapatillas</a></li>
+                                    <li><a class="dropdown-item" href="Busqueda?value=jeans">Jeans</a></li>
+                                    <li><a class="dropdown-item" href="Busqueda?value=camperas">Camperas</a></li>
+                                    <%--                                    
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>--%>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown" style="margin-left: 3rem; margin-right:3rem;">
+                                <a class="dropdown-toggle nav-link text-white" href="#" id="nbDeportes" role="button" data-bs-toggle="dropdown" aria-expanded="false">Deportes
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="nbDeportes">
+                                    <li><a class="dropdown-item" href="Busqueda?value=buzos">Buzos</a></li>
+                                    <li><a class="dropdown-item" href="Busqueda?value=zapatillas">Zapatillas</a></li>
+                                    <li><a class="dropdown-item" href="Busqueda?value=remeras">Remeras</a></li>
+                                    <li><a class="dropdown-item" href="Busqueda?value=calzas">Calzas</a></li>
+                                    <li><a class="dropdown-item" href="Busqueda?value=medias">Medias</a></li>
+                                    <%--                                    
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>--%>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown" style="margin-left: 3rem; margin-right:3rem;">
+                                <a class="dropdown-toggle nav-link text-white" href="#" id="nbTemporada" role="button" data-bs-toggle="dropdown" aria-expanded="false">Temporada
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="nbTemporada">
+                                    <li><a class="dropdown-item" href="Busqueda?value=jeans">Jeans</a></li>
+                                    <li><a class="dropdown-item" href="Busqueda?value=camperas">Camperas</a></li>
+                                    <li><a class="dropdown-item" href="Busqueda?value=zapatillas">Zapatillas</a></li>
+                                    <li><a class="dropdown-item" href="Busqueda?value=remeras">Remeras</a></li>
+                                    <li><a class="dropdown-item" href="Busqueda?value=calzado">Calzado</a></li>
+                                    <%--                                    
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>--%>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown" style="margin-left: 3rem; margin-right:3rem;">
+                                <a class="dropdown-toggle nav-link text-white" href="#" id="nbRebajas" role="button" data-bs-toggle="dropdown" aria-expanded="false">Rebajas
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="nbRebajas">
+                                    <li><a class="dropdown-item" href="Busqueda?value=camperas">Camperas</a></li>
+                                    <li><a class="dropdown-item" href="Busqueda?value=jeans">Jeans</a></li>
+                                    <li><a class="dropdown-item" href="Busqueda?value=remeras">Remeras</a></li>
+                                    <li><a class="dropdown-item" href="Busqueda?value=calzado">Calzado</a></li>
+                                    <li><a class="dropdown-item" href="Busqueda?value=zapatillas">Zapatillas</a></li>
+                                    <%--                                    
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>--%>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+
+        <div class="container" style="min-height: 100vh;">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+
+
+<!-- Remove the container if you want to extend the Footer to full width. -->
+<div class="row">
+
+  <!-- Footer -->
+  <footer
+          class="text-center text-lg-start text-white"
+          style="background-color: #1c2331; margin-top: 1rem;"
+          >
+    <!-- Section: Social media -->
+    <%--<section
+             class="d-flex justify-content-between p-4 row"
+             style="background-color: #6351ce"
+             >
+      <!-- Left -->
+      <div class="me-5">
+        <span>Get connected with us on social networks:</span>
+      </div>
+      <!-- Left -->
+
+      <!-- Right -->
+      <div>
+        <a href="#" class="text-white me-4">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="#" class="text-white me-4">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#" class="text-white me-4">
+          <i class="fab fa-google"></i>
+        </a>
+        <a href="#" class="text-white me-4">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="#" class="text-white me-4">
+          <i class="fab fa-linkedin"></i>
+        </a>
+        <a href="#" class="text-white me-4">
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
+      <!-- Right -->
+    </section>--%>
+    <!-- Section: Social media -->
+
+    <!-- Section: Links  -->
+    <section class="">
+      <div class="container text-center text-md-start mt-5">
+        <!-- Grid row -->
+        <div class="row mt-3">
+          <!-- Grid column -->
+          <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+            <!-- Content -->
+            <h6 class="text-uppercase fw-bold">Tienda Virtual</h6>
+            <hr
+                class="mb-4 mt-0 d-inline-block mx-auto"
+                style="width: 60px; background-color: #7c4dff; height: 2px"
+                />
+            <p>
+             Esta es una tienda virtual desarrollada por estudiantes de la Universidad Tecnológica Nacional.
+            </p>
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+            <!-- Links -->
+            <h6 class="text-uppercase fw-bold">Productos</h6>
+            <hr
+                class="mb-4 mt-0 d-inline-block mx-auto"
+                style="width: 60px; background-color: #7c4dff; height: 2px"
+                />
+            <p>
+              <a href="Busqueda.aspx?value=campera" class="text-white">Camperas</a>
+            </p>
+            <p>
+              <a href="Busqueda.aspx?value=remera" class="text-white">Remeras</a>
+            </p>
+            <p>
+              <a href="Busqueda.aspx?value=zapatilla" class="text-white">Zapatillas</a>
+            </p>
+            <p>
+              <a href="Busqueda.aspx?value=jean" class="text-white">Jeans</a>
+            </p>
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+            <!-- Links -->
+            <h6 class="text-uppercase fw-bold">Sobre la Tienda</h6>
+            <hr
+                class="mb-4 mt-0 d-inline-block mx-auto"
+                style="width: 60px; background-color: #7c4dff; height: 2px"
+                />
+            <p>
+              <a href="#!" class="text-white">Atención al cliente</a>
+            </p>
+            <p>
+              <a href="#!" class="text-white">Cambios y devoluciones</a>
+            </p>
+            <p>
+              <a href="#!" class="text-white">Sea nuestro proveedor</a>
+            </p>
+            <p>
+              <a href="#!" class="text-white">Dudas Frecuentes</a>
+            </p>
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+            <!-- Links -->
+            <h6 class="text-uppercase fw-bold">Contacto</h6>
+            <hr
+                class="mb-4 mt-0 d-inline-block mx-auto"
+                style="width: 60px; background-color: #7c4dff; height: 2px"
+                />
+            <p><i class="fas fa-home mr-3"></i> General Pacheco, Buenos Aires, Argentina</p>
+            <p><i class="fas fa-envelope mr-3"></i> tiendavirtual-frpg2022@hotmail.com</p>
+            <p><i class="fas fa-phone mr-3"></i> +541112345678</p>
+            <p><i class="fas fa-print mr-3"></i> +541191234567</p>
+          </div>
+          <!-- Grid column -->
+        </div>
+        <!-- Grid row -->
+      </div>
+    </section>
+    <!-- Section: Links  -->
+
+    <!-- Copyright -->
+    <div
+         class="text-center p-3"
+         style="background-color: rgba(0, 0, 0, 0.2)"
+         >
+      © 2022 Copyright:
+      <a class="text-white">Iaconis-Gómez</a>
+        <p>Todos los derechos reservados.</p>
+    </div>
+    <!-- Copyright -->
+  </footer>
+  <!-- Footer -->
+
+</div>
+<!-- End of .container -->
+
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+</body>
+</html>
