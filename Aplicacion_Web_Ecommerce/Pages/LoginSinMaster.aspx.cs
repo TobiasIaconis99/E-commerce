@@ -18,8 +18,8 @@ namespace Aplicacion_Web_Ecommerce.Pages
         {
             if (!IsPostBack)
             {
-                TxtNombreUsuario.Text = "Admin";
-                TxtContraseña.Text = "123";
+                //TxtNombreUsuario.Text = "Admin";
+                //TxtContraseña.Text = "123";
             }
         }
 
