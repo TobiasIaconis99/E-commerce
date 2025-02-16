@@ -11,7 +11,8 @@
             <div class="col-4">
                 <asp:Label ID="lblNombrePais" runat="server" Text="Nombre del Pais"></asp:Label>
                 <asp:TextBox ID="txtNombrePais" CssClass="form-control" 
-                    oninput="this.value = this.value.replace(/[^a-zA-Z0]/,'')" runat="server"></asp:TextBox>
+                    oninput="this.value = this.value.replace(/[^a-zA-Z\s]/,'')"
+                    MaxLength="45" runat="server"></asp:TextBox>
                 <p style="display:none; color:red" id="validatePais">*Campo obligatorio</p>
             </div>
         </div>
@@ -21,8 +22,9 @@
 
     <div class="mb-3 row">
         <div class="d-grid gap-2 d-md-block">
-            <asp:Button ID="BtnAtras" CssClass="btn btn-primary" runat="server" Text="Atrás" OnClick="BtnAtras_Click" />
-            <asp:Button ID="BtnAgregar" runat="server" OnClick="BtnAgregar_Click" 
+            <asp:Button ID="BtnAtras" CssClass="btn btn-primary" runat="server" Text="Atrás" ToolTip="Atras"
+                OnClick="BtnAtras_Click" />
+            <asp:Button ID="BtnAgregar" runat="server" OnClick="BtnAgregar_Click" ToolTip="Agregar"
                 OnClientClick="return validarInput()" Text="Agregar" CssClass="btn btn-primary" />
         </div>
     </div>

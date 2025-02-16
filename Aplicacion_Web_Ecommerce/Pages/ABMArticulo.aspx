@@ -8,18 +8,22 @@
             <div class="col">
                 <asp:Label ID="a_lblNombre" runat="server" Text="Nombre"></asp:Label>
                 <asp:TextBox ID="a_txtNombre" CssClass="form-control" runat="server"></asp:TextBox>
+                <p id="vNombre" class="text-danger" style="display:none">*Debe ingresar un nombre</p>
             </div>
             <div class="col">
                 <asp:Label ID="a_lblMarcas" runat="server" Text="Marcas"></asp:Label>
                 <asp:DropDownList ID="a_ddlMarcas" CssClass="form-select" runat="server"></asp:DropDownList>
+                <p id="vMarca" class="text-danger" style="display:none">*Debe elegir una marca</p>
             </div>
             <div class="col">
                 <asp:Label ID="a_lblCategorias" runat="server" Text="Categorias"></asp:Label>
                 <asp:DropDownList ID="a_ddlCategorias" CssClass="form-select" runat="server"></asp:DropDownList>
+                <p id="vCategoria" class="text-danger" style="display:none">*Debe elegir una marca</p>
             </div>
             <div class="col">
                 <asp:Label ID="a_lblGeneros" runat="server" Text="Generos"></asp:Label>
                 <asp:DropDownList ID="a_ddlGeneros" CssClass="form-select" runat="server"></asp:DropDownList>
+                <p id="vGenero" class="text-danger" style="display:none">*Debe elegir un genero</p>
             </div>
 
         </div>
@@ -27,17 +31,20 @@
             <div class="col">
                 <asp:Label ID="a_lblPrecio" runat="server" Text="Precio"></asp:Label>
                 <asp:TextBox ID="a_txtPrecio" CssClass="form-control" runat="server"></asp:TextBox>
+                <p id="vPrecio" class="text-danger" style="display:none">*Debe ingresar un precio</p>
             </div>
             <div class="col">
                 <asp:Label ID="a_lblUrlImagen" runat="server" Text="URL de Imagen"></asp:Label>
                 <asp:TextBox ID="a_txtUrlImagen" CssClass="form-control" runat="server"></asp:TextBox>
+                <%--<p class="text-danger" style="display:none">*Debe ingresar un genero</p>--%>
             </div>
         </div>
         <div class="mb-3 row">
             <div class="col">
                 <asp:Label ID="a_lblDescripcion" runat="server" Text="Descripcion"></asp:Label>
-                <asp:TextBox ID="a_txtDescripcion" TextMode="MultiLine" CssClass="form-control" Rows="3" runat="server"></asp:TextBox>
-
+                <asp:TextBox ID="a_txtDescripcion" TextMode="MultiLine" CssClass="form-control" 
+                    Rows="3" runat="server">
+                </asp:TextBox>
             </div>
         </div>
         <div class="mb-3 row">
@@ -203,13 +210,15 @@
         <div class="mb-3 row">
             <div class="d-grid gap-2 d-md-block">
                 <asp:Button ID="a_btnAtrás" CssClass="btn btn-primary" runat="server" Text="Atrás" OnClick="a_btnAtrás_Click" />
-                <asp:Button ID="a_btnCrear" CssClass="btn btn-primary" runat="server" Text="Crear Articulo" OnClick="a_btnCrear_Click" />
+                <asp:Button ID="a_btnCrear" CssClass="btn btn-primary" runat="server" OnClientClick="return validarInput()"
+                    Text="Crear Articulo" OnClick="a_btnCrear_Click" />
             </div>
         </div>
     </div>
-        
-        <%} %>
-    <%else if(tipo=="e") { %>
+
+    <%} %>
+    <%else if (tipo == "e")
+        { %>
 
     <div class="form-control">
         <div class="mb-3 row">
@@ -415,10 +424,47 @@
             </div>
         </div>
     </div>
-        
-        
-        
-        
-        <%} %>
 
+
+
+
+    <%} %>
+    <script>
+        function validarInput(){
+            let retorno = true;
+            let nombreArticulo = document.getElementById('<%= a_txtNombre.ClientID %>').value;
+            let marca = document.getElementById('<%= a_ddlMarcas.ClientID %>').value;
+            let categoria = document.getElementById('<%= a_ddlCategorias.ClientID %>').value;
+            let genero = document.getElementById('<%= a_ddlGeneros.ClientID %>').value;
+            let precio = document.getElementById('<%= a_txtPrecio.ClientID %>').value;
+
+            let vNombre = document.getElementById('vNombre');
+            let vPrecio = document.getElementById('vPrecio');
+
+
+            if(nombreArticulo==""){
+                vNombre.style.display = "block";
+                retorno = false;
+            }
+
+            if(marca=="-1"){
+                return false;
+            }
+
+            if(categoria=="-1"){
+                return false;
+            }
+
+            if(genero=="-1"){
+                return false;
+            }
+
+            if(precio==""){
+                vPrecio.style.display = "block";
+                return retorno;
+            }
+
+            return retorno;
+        }
+    </script>
 </asp:Content>
